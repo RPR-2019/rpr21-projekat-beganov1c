@@ -2,7 +2,7 @@
   <configuration default="false" name="Main" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="ba.unsa.etf.rpr.Main" />
     <module name="untitled2" />
-    <option name="VM_PARAMETERS" value="--module-path /usr/local/share/openjfx/lib --add-modules javafx.controls,javafx.fxml" />
+    <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-17.0.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
     <RunnerSettings RunnerId="Run" />
     <ConfigurationWrapper RunnerId="Run" />
     <method v="2">
