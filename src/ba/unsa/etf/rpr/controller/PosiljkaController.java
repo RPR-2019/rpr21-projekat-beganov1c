@@ -80,6 +80,8 @@ public class PosiljkaController {
         kurirChoice.setOnAction(actionEvent -> {
             kurirNazivField.setText(kurirChoice.getSelectionModel().getSelectedItem().getNaziv());
             kurirTelefonField.setText(kurirChoice.getSelectionModel().getSelectedItem().getBrojTelefona());
+            if(posiljka!=null)
+                posiljka.setKurir(kurirChoice.getValue());
         });
 
         ObservableList<Kurir> kuriri = FXCollections.observableArrayList(model.kuriri());
