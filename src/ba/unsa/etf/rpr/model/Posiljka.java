@@ -5,15 +5,16 @@ public class Posiljka {
     private int id;
     private String opis;
     private String adresa;
-    private Korisnik primaoc,posiljaoc;
+    private Korisnik primaoc;
+    private Korisnik posiljaoc;
     private Kurir kurir;
-    private double tezina;
-    private double cijenaDostave;
+    private int tezina;
+    private int cijenaDostave;
 
     public Posiljka() {
     }
 
-    public Posiljka(int id, String opis, String adresa, Korisnik primaoc, Korisnik posiljaoc, Kurir kurir, double tezina, double cijenaDostave) {
+    public Posiljka(int id, String opis, String adresa, Korisnik primaoc, Korisnik posiljaoc, Kurir kurir, int tezina, int cijenaDostave) {
         this.id = id;
         this.opis = opis;
         this.adresa = adresa;
@@ -64,19 +65,19 @@ public class Posiljka {
         this.kurir = kurir;
     }
 
-    public double getTezina() {
+    public int getTezina() {
         return tezina;
     }
 
-    public void setTezina(double tezina) {
+    public void setTezina(int tezina) {
         this.tezina = tezina;
     }
 
-    public double getCijenaDostave() {
+    public int getCijenaDostave() {
         return cijenaDostave;
     }
 
-    public void setCijenaDostave(double cijenaDostave) {
+    public void setCijenaDostave(int cijenaDostave) {
         this.cijenaDostave = cijenaDostave;
     }
 

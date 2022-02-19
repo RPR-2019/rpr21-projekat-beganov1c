@@ -14,7 +14,7 @@ public class Kurir extends Osoba {
         posiljke = new ArrayList<>();
     }
 
-    public Kurir(int id,String ime, String prezime, String brojTelefona, ArrayList<Posiljka> posiljke) {
+    public Kurir(int id,String ime, String brojTelefona, ArrayList<Posiljka> posiljke) {
         super(ime, brojTelefona);
         this.id = id;
         this.posiljke = posiljke;

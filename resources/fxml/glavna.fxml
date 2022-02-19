@@ -12,7 +12,7 @@
             <TableColumn fx:id="colPosiljkaOpis" prefWidth="89.0" text="Opis" />
                 <TableColumn fx:id="colPosiljkaAdresa" maxWidth="1.7976931348623157E308" prefWidth="127.0" text="Adresa" />
                 <TableColumn fx:id="colKurir" maxWidth="1.7976931348623157E308" prefWidth="78.0" text="Kurir" />
-            <TableColumn fx:id="colTezina" prefWidth="51.0" text="Težina" />
+            <TableColumn fx:id="colTezina" prefWidth="55.0" text="Težina" />
             </columns>
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -25,17 +25,25 @@
     <right>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnNapraviPosiljku" mnemonicParsing="false" onAction="#napraviAction" prefWidth="110.0" text="Napravi posiljku" />
-                <Button fx:id="btnObrisiPosiljku" mnemonicParsing="false" onAction="#obrisiAction" prefWidth="110.0" text="Obrisi posiljku" />
-                <Button fx:id="btnAzurirajPosiljku" mnemonicParsing="false" onAction="#azurirajAction" prefWidth="110.0" text="Azuriraj posiljku" />
-                <Button fx:id="btnRegistrujKurira" mnemonicParsing="false" onAction="#registrujAction" prefWidth="110.0" text="Registruj kurira" />
+                <Button fx:id="btnNapraviPosiljku" mnemonicParsing="false" onAction="#napraviAction" prefHeight="25.0" prefWidth="204.0" text="Napravi posiljku" />
+                <Button fx:id="btnObrisiPosiljku" mnemonicParsing="false" onAction="#obrisiAction" prefHeight="25.0" prefWidth="153.0" text="Obrisi posiljku" />
+                <Button fx:id="btnAzurirajPosiljku" mnemonicParsing="false" onAction="#azurirajAction" prefHeight="25.0" prefWidth="212.0" text="Azuriraj posiljku" />
             <Separator prefWidth="200.0">
                <padding>
-                  <Insets bottom="22.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></Separator>
+                <Button fx:id="btnRegistrujKurira" mnemonicParsing="false" onAction="#registrujAction" prefHeight="25.0" prefWidth="188.0" text="Registruj kurira" />
+            <Button fx:id="btnObrisiKurira" mnemonicParsing="false" onAction="#obrisiKuriraAction" prefHeight="25.0" prefWidth="199.0" text="Obrisi kurira" />
+            <Button fx:id="btnAzurirajKurira" mnemonicParsing="false" onAction="#azurirajKuriraAction" prefHeight="25.0" prefWidth="373.0" text="Azuriraj kurira" />
+            <Separator prefWidth="200.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Separator>
+            <Button fx:id="btnIzvjestaj" mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Izvjestaj" />
             <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="281.0" prefWidth="120.0">
                <children>
-                  <Button fx:id="odjavaBtn" mnemonicParsing="false" onAction="#odjavaAction" prefHeight="25.0" prefWidth="271.0" text="Odjavi se" />
+                  <Button fx:id="odjavaBtn" mnemonicParsing="false" onAction="#odjavaAction" prefHeight="25.0" prefWidth="221.0" text="Odjavi se" />
                </children>
             </VBox>
             </children>
