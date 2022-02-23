@@ -30,7 +30,6 @@ public class ExpressMailDAO {
     private PreparedStatement createPackageQuery;
     private PreparedStatement getMaxIdPackageQuery;
     private PreparedStatement deleteCourierQuery;
-    private PreparedStatement deletePackageForCourierQuery;
     private PreparedStatement addUserQuery;
     private PreparedStatement getMaxIdUserQuery;
     private PreparedStatement createRegisterQuery;
@@ -97,16 +96,15 @@ public class ExpressMailDAO {
         getCourierQuery = conn.prepareStatement("SELECT * FROM courier WHERE id=?");
         getUserQuery = conn.prepareStatement("SELECT * FROM user WHERE id=?");
         deletePackageQuery = conn.prepareStatement("DELETE FROM package WHERE id=?");
-        addCourierQuery = conn.prepareStatement("INSERT INTO courier VALUES (?,?,?)");
+        addCourierQuery = conn.prepareStatement("INSERT INTO courier VALUES (?,?,?,?,?)");
         getMaxIdCourierQuery = conn.prepareStatement("SELECT MAX(id)+1 FROM courier");
         getCouriersQuery = conn.prepareStatement("SELECT * FROM courier");
         updatePackageQuery = conn.prepareStatement("UPDATE package SET description=?,address=?,sender=?,receiver=?,courier=?,weight=?,delivery_price=?,city=?,zip_code=?, sending_time=?, delivery_time=?, order_status=? WHERE id=?");
         updateUserQuery= conn.prepareStatement("UPDATE user SET name=?,telephone_number=?,address=?,city=?,zip_code=? WHERE id=?");
-        updateCourierQuery = conn.prepareStatement("UPDATE courier SET name=?,telephone_number=? WHERE id=?");
+        updateCourierQuery = conn.prepareStatement("UPDATE courier SET name=?,telephone_number=?,username=?,password=? WHERE id=?");
         createPackageQuery = conn.prepareStatement("INSERT INTO package VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
         getMaxIdPackageQuery = conn.prepareStatement("SELECT MAX(id)+1 FROM package");
         deleteCourierQuery = conn.prepareStatement("DELETE FROM courier WHERE id=?");
-        deletePackageForCourierQuery = conn.prepareStatement("DELETE FROM package WHERE courier=?");
         addUserQuery = conn.prepareStatement("INSERT INTO user VALUES (?,?,?,?,?,?)");
         getMaxIdUserQuery = conn.prepareStatement("SELECT MAX(id)+1 FROM user");
         createRegisterQuery = conn.prepareStatement("INSERT INTO register VALUES(?,?)");
@@ -185,7 +183,7 @@ public class ExpressMailDAO {
         ResultSet rs = getCourierQuery.executeQuery();
         if(!rs.next())
             return null;
-        return new Courier(rs.getInt(1),rs.getString(2),rs.getString(3));
+        return new Courier(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
 
     }
 

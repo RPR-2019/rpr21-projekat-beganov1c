@@ -7,14 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RegisterController {
+public class CourierController {
     public TextField nameField;
     public TextField telephoneNumberField;
+    public TextField usernameField;
+    public TextField passwordField;
     public Button okBtn;
     public Button cancelBtn;
     private Courier courier;
 
-    public RegisterController(Courier courier) {
+    public CourierController(Courier courier) {
         this.courier = courier;
     }
 
@@ -23,6 +25,8 @@ public class RegisterController {
         if(courier !=null) {
             nameField.setText(courier.getName());
             telephoneNumberField.setText(courier.getTelephoneNumber());
+            usernameField.setText(courier.getUsername());
+            passwordField.setText(courier.getPassword());
         }
     }
 
@@ -50,12 +54,34 @@ public class RegisterController {
             telephoneNumberField.getStyleClass().add("fieldCorrect");
         }
 
-        if(!nameField.getText().trim().isEmpty() && !telephoneNumberField.getText().trim().isEmpty()) {
+        if(usernameField.getText().trim().isEmpty()) {
+            usernameField.getStyleClass().removeAll("fieldCorrect");
+            usernameField.getStyleClass().add("fieldIncorrect");
+        }
 
-            if(courier ==null) courier = new Courier(-1, nameField.getText(), telephoneNumberField.getText());
+        else {
+            usernameField.getStyleClass().removeAll("fieldIncorrect");
+            usernameField.getStyleClass().add("fieldCorrect");
+        }
+
+        if(passwordField.getText().trim().isEmpty()) {
+            passwordField.getStyleClass().removeAll("fieldCorrect");
+            passwordField.getStyleClass().add("fieldIncorrect");
+        }
+
+        else {
+            passwordField.getStyleClass().removeAll("fieldIncorrect");
+            passwordField.getStyleClass().add("fieldCorrect");
+        }
+
+        if(!nameField.getText().trim().isEmpty() && !telephoneNumberField.getText().trim().isEmpty() && !usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty() ) {
+
+            if(courier ==null) courier = new Courier(-1, nameField.getText(), telephoneNumberField.getText(), usernameField.getText(), passwordField.getText());
             else {
                 courier.setName(nameField.getText());
                 courier.setTelephoneNumber(telephoneNumberField.getText());
+                courier.setUsername(usernameField.getText());
+                courier.setPassword(passwordField.getText());
             }
             Stage stage = (Stage) okBtn.getScene().getWindow();
             stage.close();

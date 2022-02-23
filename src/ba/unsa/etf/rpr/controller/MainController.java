@@ -238,9 +238,9 @@ public class MainController {
     public void registerCourierAction(ActionEvent actionEvent) throws IOException {
 
         Stage stage = new Stage();
-        RegisterController registerController = new RegisterController(null);
+        CourierController courierController = new CourierController(null);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/courier.fxml"));
-        loader.setController(registerController);
+        loader.setController(courierController);
         Parent root = loader.load();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
@@ -248,7 +248,7 @@ public class MainController {
         stage.show();
 
         stage.setOnHiding(e->{
-            Courier courier = registerController.getCourier();
+            Courier courier = courierController.getCourier();
             if(courier !=null) {
                 model.addCourier(courier);
             }
@@ -268,9 +268,9 @@ public class MainController {
             if (result.isPresent()){
 
                 Stage stage = new Stage();
-                RegisterController registerController = new RegisterController(result.get());
+                CourierController courierController = new CourierController(result.get());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/courier.fxml"));
-                loader.setController(registerController);
+                loader.setController(courierController);
                 Parent root = loader.load();
                 stage.setScene(new Scene(root));
                 stage.setResizable(false);
@@ -278,7 +278,7 @@ public class MainController {
                 stage.show();
 
                 stage.setOnHiding(e->{
-                    Courier courier = registerController.getCourier();
+                    Courier courier = courierController.getCourier();
                     if(courier !=null) {
                         model.updateCourier(courier);
                         ObservableList<Package> packages = FXCollections.observableArrayList();
