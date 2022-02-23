@@ -20,9 +20,9 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Autor aplikacije: Tarik Beganovic" />
-      <Label text="Verzija: 1.0.0" GridPane.rowIndex="1" />
-      <Label text="Tehnicka podrska: 033/xxx/xxx" GridPane.rowIndex="2" />
+      <Label text="Developer: Tarik Beganović" />
+      <Label text="Version: 1.0.0" GridPane.rowIndex="1" />
+      <Label text="Technical Support: 033/xxx/xxx" GridPane.rowIndex="2" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="4">
         <buttons>
           <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />

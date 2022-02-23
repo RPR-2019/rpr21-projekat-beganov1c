@@ -1,0 +1,31 @@
+.fieldCorrect {
+    -fx-control-inner-background: greenyellow;
+}
+.fieldIncorrect {
+    -fx-control-inner-background: lightpink;
+}
+#mniSave > .label{
+    -fx-graphic: url("/images/save.png");
+}
+#mniSave .accelerator-text{
+    -fx-graphic: none;
+}
+#mniLanguage > .label{
+    -fx-graphic: url("/images/globe.png");
+}
+#mniLanguage .accelerator-text{
+    -fx-graphic: none;
+}
+#mniExit > .label{
+    -fx-graphic: url("/images/close.png");
+}
+#mniExit .accelerator-text{
+    -fx-graphic: none;
+}
+#mniAbout > .label{
+    -fx-graphic: url("/images/info.png");
+}
+#mniAbout .accelerator-text{
+    -fx-graphic: none;
+}
+

@@ -1,36 +1,50 @@
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS "korisnik" (
+CREATE TABLE IF NOT EXISTS "user" (
 	"id"	INTEGER,
-	"naziv"	TEXT,
-	"broj_telefona"	TEXT,
-	"adresa"	TEXT,
+	"name"	TEXT,
+	"telephone_number"	TEXT,
+	"address"	TEXT,
+	"city" TEXT,
+	"zip_code" INTEGER,
 	PRIMARY KEY("id")
 );
-CREATE TABLE IF NOT EXISTS "kurir" (
+CREATE TABLE IF NOT EXISTS "courier" (
 	"id"	INTEGER,
-	"naziv"	TEXT,
-	"broj_telefona"	TEXT,
+	"name"	TEXT,
+	"telephone_number"	TEXT,
 	PRIMARY KEY("id")
 );
-CREATE TABLE IF NOT EXISTS "posiljka" (
+CREATE TABLE IF NOT EXISTS "package" (
 	"id"	INTEGER,
-	"opis"	TEXT,
-	"adresa" TEXT,
-	"posiljaoc"	INTEGER,
-	"primalac"	INTEGER,
-	"kurir"	INTEGER,
-    "tezina"	INTEGER,
-    "cijena_dostave" INTEGER,
+	"description"	TEXT,
+	"address" TEXT,
+	"sender"	INTEGER,
+	"receiver"	INTEGER,
+	"courier"	INTEGER,
+    "weight"	INTEGER,
+    "delivery_price" INTEGER,
+    "city" TEXT,
+    "zip_code" INTEGER,
+    "sending_time"	TEXT,
+    "delivery_time"	TEXT,
+    "order_status" TEXT,
 	PRIMARY KEY("id"),
-	FOREIGN KEY("kurir") REFERENCES "kurir"("id"),
-	FOREIGN KEY("posiljaoc") REFERENCES "korisnik"("id"),
-	FOREIGN KEY("primalac") REFERENCES "korisnik"("id")
+	FOREIGN KEY("courier") REFERENCES "courier"("id"),
+	FOREIGN KEY("sender") REFERENCES "user"("id"),
+	FOREIGN KEY("receiver") REFERENCES "user"("id")
 );
-INSERT INTO "korisnik" VALUES (1,'Tarik Beganović','123','neka');
-INSERT INTO "korisnik" VALUES (2,'Meho Mehić','456','ona');
-INSERT INTO "korisnik" VALUES (3,'Ja','123456','ova');
-INSERT INTO "kurir" VALUES (1,'Kurir 1','777');
-INSERT INTO "kurir" VALUES (2,'Kurir 2','888');
-INSERT INTO "posiljka" VALUES (1,'Televizor','ona',1,2,1,2,10);
-INSERT INTO "posiljka" VALUES (2,'Sportska oprema','ova',2,3,2,8,10);
+CREATE TABLE IF NOT EXISTS "register" (
+    "courier"	INTEGER,
+    "package"	INTEGER,
+    FOREIGN KEY("courier") REFERENCES "courier"("id"),
+    FOREIGN KEY("package") REFERENCES "package"("id")
+);
+INSERT INTO "user" VALUES (1,'/','/','/', '/',0);
+INSERT INTO "user" VALUES (2,'Tarik Beganović','123','neka', 'Cazin', 77220);
+INSERT INTO "user" VALUES (3,'Meho Mehić','456','ona', 'Cazin', 77220);
+INSERT INTO "user" VALUES (4,'Ja','123456','ova', 'Cazin', 77220);
+INSERT INTO "courier" VALUES (1,'Courier 1','777');
+INSERT INTO "courier" VALUES (2,'Courier 2','888');
+INSERT INTO "package" VALUES (1,'Televizor','ona',2,3,1,2,10,'Cazin',77220,'14-01-2017 11:42:32',NULL,'In transport');
+INSERT INTO "package" VALUES (2,'Sportska oprema','ova',3,4,2,8,10,'Cazin',77220,'14-03-2020 13:42:00',NULL,'In warehouse');
 COMMIT;

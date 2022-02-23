@@ -12,7 +12,7 @@
 <?import java.net.URL?>
 <GridPane hgap="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="3.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@/css/izgled.css" />
+        <URL value="@/css/appearance.css" />
     </stylesheets>
     <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -24,10 +24,10 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Naziv:" />
-      <Label text="Broj telefona:" GridPane.rowIndex="1" />
-      <TextField fx:id="nazivField" GridPane.columnIndex="1" />
-      <TextField fx:id="brojTelefonaField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Name:" />
+      <Label text="Telephone Number:" GridPane.rowIndex="1" />
+      <TextField fx:id="nameField" GridPane.columnIndex="1" />
+      <TextField fx:id="telephoneNumberField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
         <buttons>
           <Button fx:id="okBtn" defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="Ok" />

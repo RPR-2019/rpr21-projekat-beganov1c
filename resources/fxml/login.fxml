@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.LoginController">
+    <stylesheets>
+        <URL value="@/css/appearance.css" />
+    </stylesheets>
+    <center>
+      <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" vgap="5.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Username:" />
+            <Label text="Password:" GridPane.rowIndex="1" />
+            <TextField fx:id="fldUsername" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.vgrow="ALWAYS" />
+            <PasswordField fx:id="fldPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding>
+      </GridPane>
+   </center>
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="Ok" />
+            <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+   </bottom>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu text="_File">
+            <items>
+                  <Menu fx:id="mniLanguage" text="_Languages">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="English" />
+                      <MenuItem mnemonicParsing="false" text="Bosanski" />
+                    </items>
+                  </Menu>
+              <MenuItem fx:id="mniExit" onAction="#cancelAction" text="E_xit" />
+            </items>
+          </Menu>
+          <Menu text="_Help">
+            <items>
+              <MenuItem fx:id="mniAbout" onAction="#aboutAction" text="_About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</BorderPane>
