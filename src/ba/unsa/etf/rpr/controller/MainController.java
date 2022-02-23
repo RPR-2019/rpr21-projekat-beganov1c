@@ -239,7 +239,7 @@ public class MainController {
 
         Stage stage = new Stage();
         RegisterController registerController = new RegisterController(null);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/courier.fxml"));
         loader.setController(registerController);
         Parent root = loader.load();
         stage.setScene(new Scene(root));
@@ -269,7 +269,7 @@ public class MainController {
 
                 Stage stage = new Stage();
                 RegisterController registerController = new RegisterController(result.get());
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/courier.fxml"));
                 loader.setController(registerController);
                 Parent root = loader.load();
                 stage.setScene(new Scene(root));
