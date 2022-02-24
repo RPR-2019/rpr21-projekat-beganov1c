@@ -7,6 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class CourierController {
     public TextField nameField;
     public TextField telephoneNumberField;
@@ -15,9 +19,11 @@ public class CourierController {
     public Button okBtn;
     public Button cancelBtn;
     private Courier courier;
+    private ArrayList<String> usernames;
 
-    public CourierController(Courier courier) {
+    public CourierController(Courier courier, ArrayList<String> usernames) {
         this.courier = courier;
+        this.usernames=usernames;
     }
 
     @FXML
@@ -34,6 +40,7 @@ public class CourierController {
     public void okAction(ActionEvent actionEvent) {
 
 
+        AtomicBoolean isti = new AtomicBoolean(false);
         if(nameField.getText().trim().isEmpty()) {
             nameField.getStyleClass().removeAll("fieldCorrect");
             nameField.getStyleClass().add("fieldIncorrect");
@@ -60,8 +67,19 @@ public class CourierController {
         }
 
         else {
-            usernameField.getStyleClass().removeAll("fieldIncorrect");
-            usernameField.getStyleClass().add("fieldCorrect");
+
+            Optional<String> nadjen=usernames.stream().filter(username -> username.equals(usernameField.getText())).findFirst();
+            if(nadjen.isPresent()) {
+                usernameField.getStyleClass().removeAll("fieldCorrect");
+                usernameField.getStyleClass().add("fieldIncorrect");
+            }
+            else {
+                usernameField.getStyleClass().removeAll("fieldIncorrect");
+                usernameField.getStyleClass().add("fieldCorrect");
+                isti.set(false);
+            }
+
+
         }
 
         if(passwordField.getText().trim().isEmpty()) {
@@ -74,7 +92,7 @@ public class CourierController {
             passwordField.getStyleClass().add("fieldCorrect");
         }
 
-        if(!nameField.getText().trim().isEmpty() && !telephoneNumberField.getText().trim().isEmpty() && !usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty() ) {
+        if(!nameField.getText().trim().isEmpty() && !telephoneNumberField.getText().trim().isEmpty() && !usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty() && isti.get() ) {
 
             if(courier ==null) courier = new Courier(-1, nameField.getText(), telephoneNumberField.getText(), usernameField.getText(), passwordField.getText());
             else {

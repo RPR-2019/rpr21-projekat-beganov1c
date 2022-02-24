@@ -30,26 +30,45 @@
     <right>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button  mnemonicParsing="false" onAction="#makePackageAction" prefHeight="25.0" prefWidth="204.0" text="Create a package" />
-                <Button  mnemonicParsing="false" onAction="#deletePackageAction" prefHeight="25.0" prefWidth="153.0" text="Delete package" />
-                <Button  mnemonicParsing="false" onAction="#updatePackageAction" prefHeight="25.0" prefWidth="212.0" text="Update package" />
+                <Button mnemonicParsing="false" onAction="#makePackageAction" prefHeight="25.0" prefWidth="204.0" text="Create a package" />
+                <Button mnemonicParsing="false" onAction="#deletePackageAction" prefHeight="25.0" prefWidth="153.0" text="Delete package" />
+                <Button mnemonicParsing="false" onAction="#updatePackageAction" prefHeight="25.0" prefWidth="212.0" text="Update package" />
             <Separator prefWidth="200.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></Separator>
-                <Button  mnemonicParsing="false" onAction="#registerCourierAction" prefHeight="25.0" prefWidth="188.0" text="Register a courier" />
+                <Button mnemonicParsing="false" onAction="#registerCourierAction" prefHeight="25.0" prefWidth="188.0" text="Register a courier" />
             <Button mnemonicParsing="false" onAction="#deleteCourierAction" prefHeight="25.0" prefWidth="199.0" text="Delete courier" />
-            <Button  mnemonicParsing="false" onAction="#updateCourierAction" prefHeight="25.0" prefWidth="373.0" text="Update courier" />
+            <Button mnemonicParsing="false" onAction="#updateCourierAction" prefHeight="25.0" prefWidth="373.0" text="Update courier" />
+            <Separator prefWidth="200.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Separator>
+            <Button mnemonicParsing="false" onAction="#registerManagerAction" prefHeight="25.0" prefWidth="168.0" text="Register a manager" />
+            <Button mnemonicParsing="false" onAction="#deleteManagerAction" prefHeight="25.0" prefWidth="147.0" text="Delete manager" />
+            <Button mnemonicParsing="false" onAction="#updateManagerAction" prefHeight="25.0" prefWidth="149.0" text="Update manager" />
             <Separator prefWidth="200.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Separator>
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Report" />
+            <Separator prefWidth="200.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Separator>
             <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="281.0" prefWidth="120.0">
                <children>
                   <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logoutAction" prefHeight="25.0" prefWidth="221.0" text="Logout" />
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets top="50.0" />
+               </padding>
             </VBox>
             </children>
             <BorderPane.margin>
