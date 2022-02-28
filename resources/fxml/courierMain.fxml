@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/css/appearance.css" />
+    </stylesheets>
+    <center>
+        <TableView fx:id="tableViewPackage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colPackageId" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="61.0" text="ID" />
+                <TableColumn fx:id="colPackageDescription" prefWidth="89.0" text="%descriptions" />
+                <TableColumn fx:id="colPackageAddress" maxWidth="1.7976931348623157E308" prefWidth="143.0" text="%addresss" />
+                <TableColumn fx:id="colDeliveryPrice" maxWidth="1.7976931348623157E308" minWidth="84.0" prefWidth="88.0" text="%deliveryCosts" />
+                <TableColumn fx:id="colWeight" prefWidth="51.0" text="%weights" />
+            </columns>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+    <right>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" onAction="#monthlyReportAction" prefHeight="25.0" prefWidth="204.0" text="%monthlyReport" />
+            <Button mnemonicParsing="false" onAction="#annualReportAction" prefHeight="25.0" prefWidth="326.0" text="%annualReport" />
+                <Separator prefWidth="200.0">
+                    <padding>
+                        <Insets bottom="75.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></Separator>
+                <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="281.0" prefWidth="120.0">
+                    <children>
+                        <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logoutAction" prefHeight="25.0" prefWidth="221.0" text="%logout" />
+                    </children>
+                </VBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </BorderPane.margin>
+        </VBox>
+    </right>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu text="%file">
+                    <items>
+                        <Menu fx:id="mniLanguage" text="%language">
+                            <items>
+                                <MenuItem onAction="#bosnianAction" text="%bosnian" />
+                                <MenuItem onAction="#englishAction" text="%english" />
+                            </items>
+                        </Menu>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="mniExit" onAction="#exitAction" text="%exit" />
+                    </items>
+                </Menu>
+                <Menu text="%help">
+                    <items>
+                        <MenuItem fx:id="mniAbout" onAction="#aboutAction" text="%about" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</BorderPane>
