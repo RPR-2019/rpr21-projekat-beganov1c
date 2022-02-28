@@ -28,40 +28,37 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="ID:" GridPane.rowIndex="1" />
-      <Label text="Description:" GridPane.rowIndex="2" />
-      <Label text="Name:" GridPane.rowIndex="7" />
-      <Label text="Return address:" GridPane.rowIndex="9" />
-      <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
-      <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="12" />
-      <Label text="Telephone number:" GridPane.rowIndex="8" />
-      <Label text="Sender" GridPane.rowIndex="6" />
-      <Label text="Receiver" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-      <Label text="Name:" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-      <Label text="Telephone number:" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-      <Label text="Delivery address:" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-      <Label text="Courier" GridPane.rowIndex="13" />
-      <Label text="Weight:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Label text="Delivery price:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <Label text="Name:" GridPane.rowIndex="15" />
-      <Label text="Telephone number:" GridPane.columnIndex="3" GridPane.rowIndex="14" />
-      <TextField fx:id="packageIdField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="descriptionField" editable="false" layoutX="110.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField fx:id="senderNameField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <TextField fx:id="senderTelephoneNumberField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <TextField fx:id="senderAddressField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <TextField fx:id="receiverNameField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-      <TextField fx:id="receiverTelephoneNumberField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-      <TextField fx:id="receiverAddressField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-      <TextField fx:id="courierNameField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-      <TextField fx:id="courierTelephoneNumberField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="14" />
+      <Label text="%description" GridPane.rowIndex="1" />
+      <Label text="%name" GridPane.rowIndex="6" />
+      <Label text="%address" GridPane.rowIndex="8" />
+      <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
+      <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
+      <Label text="%telephoneNumber" GridPane.rowIndex="7" />
+      <Label text="%sender" GridPane.rowIndex="5" />
+      <Label text="%receiver" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Label text="Name:" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <Label text="%telephoneNumber" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+      <Label text="%address" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+      <Label text="%courier" GridPane.rowIndex="12" />
+      <Label text="%weight" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label text="%deliveryCost" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label text="%name" GridPane.rowIndex="14" />
+      <Label text="%telephoneNumber" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+      <TextField fx:id="descriptionField" editable="false" layoutX="110.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="senderNameField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="senderTelephoneNumberField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <TextField fx:id="senderAddressField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="receiverNameField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+      <TextField fx:id="receiverTelephoneNumberField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+      <TextField fx:id="receiverAddressField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+      <TextField fx:id="courierNameField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <TextField fx:id="courierTelephoneNumberField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="13" />
       <TextField fx:id="weightField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-      <TextField fx:id="deliveryPriceField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-      <Label text="Package" />
-      <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6" GridPane.rowSpan="6">
+      <TextField fx:id="deliveryPriceField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <Label text="%package" />
+      <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.rowSpan="6">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
@@ -69,22 +66,22 @@
             <Insets left="5.0" />
          </padding>
       </Separator>
-      <Label text="ID:" GridPane.rowIndex="14" />
-      <TextField fx:id="courierIdField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-      <Label text="Grad:" GridPane.rowIndex="10" />
-      <Label text="Zip Code:" GridPane.rowIndex="11" />
-      <Label text="Grad:" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-      <Label text="Zip Code:" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-      <TextField fx:id="senderCityField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <TextField fx:id="senderZipCodeField" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-      <TextField fx:id="receiverCityField" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-      <TextField fx:id="receiverZipCodeField" GridPane.columnIndex="4" GridPane.rowIndex="11" />
-      <Label text="Sending time:" GridPane.rowIndex="3" />
-      <Label text="Delivery time:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <Label text="Order status:" GridPane.rowIndex="4" />
-      <TextField fx:id="sendingTimeField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="orderStatusField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <TextField fx:id="deliveryTimeField" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <Label text="ID:" GridPane.rowIndex="13" />
+      <TextField fx:id="courierIdField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <Label text="%city" GridPane.rowIndex="9" />
+      <Label text="%zipCode" GridPane.rowIndex="10" />
+      <Label text="%city" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+      <Label text="%zipCode" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+      <TextField fx:id="senderCityField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="senderZipCodeField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <TextField fx:id="receiverCityField" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+      <TextField fx:id="receiverZipCodeField" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+      <Label text="%sendingTime" GridPane.rowIndex="2" />
+      <Label text="%deliveryTime" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Label text="%orderStatus" GridPane.rowIndex="3" />
+      <TextField fx:id="sendingTimeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="orderStatusField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="deliveryTimeField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

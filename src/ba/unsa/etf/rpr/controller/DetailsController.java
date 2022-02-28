@@ -42,7 +42,6 @@ public class DetailsController {
         User sender = aPackage.getSender();
         User receiver = aPackage.getReceiver();
         Courier courier = aPackage.getCourier();
-        packageIdField.setText(String.valueOf(aPackage.getId()));
         descriptionField.setText(aPackage.getDescription());
         if(sender.getZipCode()!=-1) {
             senderAddressField.setText(sender.getAddress());
