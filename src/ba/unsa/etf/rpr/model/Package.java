@@ -1,10 +1,10 @@
 package ba.unsa.etf.rpr.model;
 
-import ba.unsa.etf.rpr.OrderStatus;
+import ba.unsa.etf.rpr.enums.OrderStatus;
 
 import java.time.LocalDateTime;
 
-public class Package {
+public class Package implements Comparable<Package> {
 
     private int id;
     private String description;
@@ -141,5 +141,10 @@ public class Package {
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    @Override
+    public int compareTo(Package o) {
+        return Integer.compare(id,o.getId());
     }
 }
