@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.controller;
 
-import ba.unsa.etf.rpr.ExpressMailDAO;
-import ba.unsa.etf.rpr.OrderStatus;
+import ba.unsa.etf.rpr.DAO.ExpressMailDAO;
+import ba.unsa.etf.rpr.enums.OrderStatus;
 import ba.unsa.etf.rpr.exception.PackageDeliveredException;
 import ba.unsa.etf.rpr.exception.PackageErrorException;
 import ba.unsa.etf.rpr.model.Courier;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class PackageController {
 
-    public TextField packageIdField;
     public TextField descriptionField;
     public TextField senderNameField;
     public TextField senderTelephoneNumberField;
@@ -44,23 +44,30 @@ public class PackageController {
     public ChoiceBox<OrderStatus> orderStatusChoice;
     public TextField deliveryTimeField;
     public TextField sendingTimeField;
+    public RadioButton oldSenderRadio;
+    public RadioButton newSenderRadio;
+    public RadioButton oldReceiverRadio;
+    public RadioButton newReceiverRadio;
+    public ChoiceBox<User> oldSenderChoice;
+    public ChoiceBox<User> oldReceiverChoice;
     private Package aPackage;
     boolean validate=false;
+
 
 
     private ExpressMailDAO model = ExpressMailDAO.getInstance();
 
 
     public PackageController(Package aPackage) {
+        ResourceBundle bundle =  ResourceBundle.getBundle("Translation");
         this.aPackage = aPackage;
         if(aPackage!=null) {
             if (aPackage.getOrderStatus() == OrderStatus.DELIVERED)
-                throw new PackageDeliveredException("Order has been delivered, no need to update.");
+                throw new PackageDeliveredException(bundle.getString("packageDeliveredException"));
             if (aPackage.getOrderStatus() == OrderStatus.ERROR)
-                throw new PackageErrorException("There was a delivery error, no need to update.");
+                throw new PackageErrorException(bundle.getString("packageErrorException"));
             if(aPackage.getSender().getId()==1)
                 validate=true;
-
         }
     }
 
@@ -73,7 +80,6 @@ public class PackageController {
             Courier courier = aPackage.getCourier();
             User sender = aPackage.getSender();
             User receiver = aPackage.getReceiver();
-            packageIdField.setText(String.valueOf(aPackage.getId()));
             descriptionField.setText(aPackage.getDescription());
             if(sender.getZipCode()!=-1) {
                 senderNameField.setText(sender.getName());
@@ -135,6 +141,56 @@ public class PackageController {
         if(aPackage !=null) orderStatusChoice.getSelectionModel().select(aPackage.getOrderStatus());
         else orderStatusChoice.getSelectionModel().select(OrderStatus.IN_WAREHOUSE);
 
+        if(aPackage==null) {
+
+            oldSenderChoice.setItems(model.users());
+            oldReceiverChoice.setItems(model.users());
+            oldSenderChoice.setDisable(true);
+            oldReceiverChoice.setDisable(true);
+
+            oldSenderRadio.setOnAction(actionEvent -> {
+                if (oldSenderRadio.isSelected()) {
+                    oldSenderChoice.setDisable(false);
+                    oldSenderChoice.getSelectionModel().select(0);
+                }
+            });
+
+            newSenderRadio.setOnAction(actionEvent -> {
+                if (newSenderRadio.isSelected()) {
+                    oldSenderChoice.setDisable(true);
+                }
+            });
+
+            oldReceiverRadio.setOnAction(actionEvent -> {
+                if (oldReceiverRadio.isSelected()) {
+                    oldReceiverChoice.setDisable(false);
+                    oldReceiverChoice.getSelectionModel().select(0);
+                }
+            });
+
+            newReceiverRadio.setOnAction(actionEvent -> {
+                if (newReceiverRadio.isSelected()) {
+                    oldReceiverChoice.setDisable(true);
+                }
+            });
+
+            oldSenderChoice.setOnAction(actionEvent -> {
+                senderNameField.setText(oldSenderChoice.getSelectionModel().getSelectedItem().getName());
+                senderAddressField.setText(oldSenderChoice.getSelectionModel().getSelectedItem().getAddress());
+                senderTelephoneNumberField.setText(oldSenderChoice.getSelectionModel().getSelectedItem().getTelephoneNumber());
+                senderCityField.setText(oldSenderChoice.getSelectionModel().getSelectedItem().getCity());
+                senderZipCodeField.setText(String.valueOf(oldSenderChoice.getSelectionModel().getSelectedItem().getZipCode()));
+            });
+            oldReceiverChoice.setOnAction(actionEvent -> {
+                receiverNameField.setText(oldReceiverChoice.getSelectionModel().getSelectedItem().getName());
+                receiverAddressField.setText(oldReceiverChoice.getSelectionModel().getSelectedItem().getAddress());
+                receiverTelephoneNumberField.setText(oldReceiverChoice.getSelectionModel().getSelectedItem().getTelephoneNumber());
+                receiverCityField.setText(oldReceiverChoice.getSelectionModel().getSelectedItem().getCity());
+                receiverZipCodeField.setText(String.valueOf(oldReceiverChoice.getSelectionModel().getSelectedItem().getZipCode()));
+            });
+        }
+
+
     }
 
     private ArrayList<OrderStatus> getOrderStatuses() {
@@ -150,78 +206,95 @@ public class PackageController {
     }
 
     public void okAction(ActionEvent actionEvent) {
+        ResourceBundle bundle =  ResourceBundle.getBundle("Translation");
+        if (oldReceiverRadio.isSelected() && oldSenderRadio.isSelected() && oldSenderChoice.getSelectionModel().getSelectedItem().getId()==oldReceiverChoice.getSelectionModel().getSelectedItem().getId()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(bundle.getString("error"));
+            alert.setHeaderText(bundle.getString("senderSame"));
+            alert.setContentText(bundle.getString("selectAnother"));
 
-        boolean allOk= check();
-        boolean allOkWithoutSender= check2();
-        if(allOk || allOkWithoutSender) {
+            alert.showAndWait();
+        }
+        else {
+            boolean allOk = check();
 
-            if(aPackage ==null) {
-                Optional<ButtonType> result = Optional.empty();
-                if(allOkWithoutSender && !allOk) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText("Not all sender information has been entered correctly.");
-                    alert.setContentText("If you want the incorrect data to be ignored, press OK (it will not be possible to return the packet to the sender if errors occur), if not press Cancel.");
+            boolean allOkWithoutSender = check2();
+            if (allOk || allOkWithoutSender) {
 
-                    result = alert.showAndWait();
+                if (aPackage == null) {
+                    Optional<ButtonType> result = Optional.empty();
+                    if (allOkWithoutSender && !allOk) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle(bundle.getString("warning"));
+                        alert.setHeaderText(bundle.getString("senderInfo"));
+                        alert.setContentText(bundle.getString("senderContent"));
+
+                        result = alert.showAndWait();
+                    }
+                    if (allOk || (result.isPresent() && result.get() == ButtonType.OK)) {
+                        Courier courier = courierChoice.getValue();
+                        courier.setName(courierNameField.getText());
+                        courier.setTelephoneNumber(courierTelephoneNumberField.getText());
+
+                        int senderId = -1;
+                        int receiverId = -1;
+                        if (oldReceiverRadio.isSelected())
+                            receiverId = oldReceiverChoice.getSelectionModel().getSelectedItem().getId();
+                        if (oldSenderRadio.isSelected())
+                            senderId = oldSenderChoice.getSelectionModel().getSelectedItem().getId();
+                        int number = -1;
+                        if (allOk)
+                            number = Integer.parseInt(senderZipCodeField.getText());
+
+                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                        aPackage = new Package(-1, descriptionField.getText(), receiverAddressField.getText(),
+                                new User(senderId, senderNameField.getText(), senderTelephoneNumberField.getText(), senderAddressField.getText(), senderCityField.getText(), number),
+                                new User(receiverId, receiverNameField.getText(), receiverTelephoneNumberField.getText(), receiverAddressField.getText(), receiverCityField.getText(), Integer.parseInt(receiverZipCodeField.getText())),
+                                courier, Integer.parseInt(weightField.getText()), Integer.parseInt(deliveryPriceField.getText()), receiverCityField.getText(), Integer.parseInt(receiverZipCodeField.getText()), LocalDateTime.parse(sendingTimeField.getText(), format), null, OrderStatus.IN_WAREHOUSE);
+
+                    }
+                } else if (allOk || validate) {
+
+                    User sender = aPackage.getSender();
+                    User receiver = aPackage.getReceiver();
+                    Courier courier = aPackage.getCourier();
+
+                    aPackage.setDeliveryCost(Integer.parseInt(deliveryPriceField.getText()));
+                    aPackage.setWeight(Integer.parseInt(weightField.getText()));
+                    aPackage.setDescription(descriptionField.getText());
+                    aPackage.setAddress(receiverAddressField.getText());
+                    aPackage.setCity(receiverCityField.getText());
+                    aPackage.setZipCode(Integer.parseInt(receiverZipCodeField.getText()));
+
+                    sender.setName(senderNameField.getText());
+                    sender.setAddress(senderAddressField.getText());
+                    sender.setTelephoneNumber(senderTelephoneNumberField.getText());
+                    sender.setCity(senderCityField.getText());
+                    sender.setZipCode(Integer.parseInt(senderZipCodeField.getText()));
+
+                    receiver.setName(receiverNameField.getText());
+                    receiver.setAddress(receiverAddressField.getText());
+                    receiver.setTelephoneNumber(receiverTelephoneNumberField.getText());
+                    receiver.setCity(receiverCityField.getText());
+                    receiver.setZipCode(Integer.parseInt(receiverZipCodeField.getText()));
+
+                    aPackage.setOrderStatus(orderStatusChoice.getSelectionModel().getSelectedItem());
+
+
+                    courier.setName(courierNameField.getText());
+                    courier.setTelephoneNumber(courierTelephoneNumberField.getText());
+
+                    aPackage.setCourier(courier);
+                    aPackage.setSender(sender);
+                    aPackage.setReceiver(receiver);
+                    if (orderStatusChoice.getSelectionModel().getSelectedItem() == OrderStatus.DELIVERED)
+                        aPackage.setDeliveryTime(LocalDateTime.now());
+
+
                 }
-                  if(allOk || ( result.isPresent() && result.get() == ButtonType.OK)) {
-                      Courier courier = courierChoice.getValue();
-
-                      courier.setName(courierNameField.getText());
-                      courier.setTelephoneNumber(courierTelephoneNumberField.getText());
-                      int number = -1;
-                      if(allOk)
-                          number= Integer.parseInt(senderZipCodeField.getText());
-
-                      DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-                      aPackage = new Package(-1, descriptionField.getText(), receiverAddressField.getText(),
-                              new User(-1, senderNameField.getText(), senderTelephoneNumberField.getText(), senderAddressField.getText(), senderCityField.getText(),number),
-                              new User(-1, receiverNameField.getText(), receiverTelephoneNumberField.getText(), receiverAddressField.getText(), receiverCityField.getText(), Integer.parseInt(receiverZipCodeField.getText())),
-                              courier, Integer.parseInt(weightField.getText()), Integer.parseInt(deliveryPriceField.getText()), receiverCityField.getText(), Integer.parseInt(receiverZipCodeField.getText()),LocalDateTime.parse(sendingTimeField.getText(),format), null, OrderStatus.IN_WAREHOUSE);
-
-                  }
+                Stage stage = (Stage) okBtn.getScene().getWindow();
+                stage.close();
             }
-            else if(allOk || validate) {
-
-                User sender = aPackage.getSender();
-                User receiver = aPackage.getReceiver();
-                Courier courier = aPackage.getCourier();
-
-                aPackage.setDeliveryCost(Integer.parseInt(deliveryPriceField.getText()));
-                aPackage.setWeight(Integer.parseInt(weightField.getText()));
-                aPackage.setDescription(descriptionField.getText());
-                aPackage.setAddress(receiverAddressField.getText());
-                aPackage.setCity(receiverCityField.getText());
-                aPackage.setZipCode(Integer.parseInt(receiverZipCodeField.getText()));
-
-                sender.setName(senderNameField.getText());
-                sender.setAddress(senderAddressField.getText());
-                sender.setTelephoneNumber(senderTelephoneNumberField.getText());
-                sender.setCity(senderCityField.getText());
-                sender.setZipCode(Integer.parseInt(senderZipCodeField.getText()));
-
-                receiver.setName(receiverNameField.getText());
-                receiver.setAddress(receiverAddressField.getText());
-                receiver.setTelephoneNumber(receiverTelephoneNumberField.getText());
-                receiver.setCity(receiverCityField.getText());
-                receiver.setZipCode(Integer.parseInt(receiverZipCodeField.getText()));
-
-                aPackage.setOrderStatus(orderStatusChoice.getSelectionModel().getSelectedItem());
-
-
-                courier.setName(courierNameField.getText());
-                courier.setTelephoneNumber(courierTelephoneNumberField.getText());
-
-                aPackage.setCourier(courier);
-                aPackage.setSender(sender);
-                aPackage.setReceiver(receiver);
-                if(orderStatusChoice.getSelectionModel().getSelectedItem()== OrderStatus.DELIVERED) aPackage.setDeliveryTime(LocalDateTime.now());
-
-
-            }
-            Stage stage = (Stage) okBtn.getScene().getWindow();
-            stage.close();
         }
 
     }
