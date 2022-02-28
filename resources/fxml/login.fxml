@@ -20,8 +20,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Username:" />
-            <Label text="Password:" GridPane.rowIndex="1" />
+            <Label text="%username" />
+            <Label text="%password" GridPane.rowIndex="1" />
             <TextField fx:id="fldUsername" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.vgrow="ALWAYS" />
             <PasswordField fx:id="fldPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
@@ -33,28 +33,28 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="Ok" />
-            <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="%ok" />
+            <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="%cancel" />
         </buttons>
       </ButtonBar>
    </bottom>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu text="_File">
+          <Menu text="%file">
             <items>
-                  <Menu fx:id="mniLanguage" text="_Languages">
+                  <Menu fx:id="mniLanguage" text="%language">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="English" />
-                      <MenuItem mnemonicParsing="false" text="Bosanski" />
+                      <MenuItem mnemonicParsing="false" onAction="#bosnianAction" text="Bosanski" />
+                        <MenuItem mnemonicParsing="false" onAction="#englishAction" text="English" />
                     </items>
                   </Menu>
-              <MenuItem fx:id="mniExit" onAction="#cancelAction" text="E_xit" />
+              <MenuItem fx:id="mniExit" onAction="#cancelAction" text="%exit" />
             </items>
           </Menu>
-          <Menu text="_Help">
+          <Menu text="%help">
             <items>
-              <MenuItem fx:id="mniAbout" onAction="#aboutAction" text="_About" />
+              <MenuItem fx:id="mniAbout" onAction="#aboutAction" text="%about" />
             </items>
           </Menu>
         </menus>

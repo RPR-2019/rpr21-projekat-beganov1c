@@ -1,5 +1,8 @@
 package ba.unsa.etf.rpr.controller;
 
+import ba.unsa.etf.rpr.DAO.ExpressMailDAO;
+import ba.unsa.etf.rpr.model.Courier;
+import ba.unsa.etf.rpr.model.Manager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,11 +15,15 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class LoginController {
     public Button cancelBtn;
     public TextField fldUsername;
     public PasswordField fldPassword;
+
+    private ExpressMailDAO model = ExpressMailDAO.getInstance();
 
     @FXML
     public void initialize() {
@@ -48,10 +55,12 @@ public class LoginController {
 
     public void aboutAction(ActionEvent actionEvent) throws IOException {
 
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"),bundle);
         stage.setScene(new Scene(root));
         stage.setResizable(false);
+        stage.setTitle(bundle.getString("aboutT"));
         stage.toFront();
         stage.show();
 
@@ -59,11 +68,45 @@ public class LoginController {
 
     public void okAction(ActionEvent actionEvent) throws IOException {
 
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Courier courier=null;
+        Manager manager=null;
+        courier=model.getCourier(fldUsername.getText(),fldPassword.getText());
+        manager=model.getManager(fldUsername.getText(),fldPassword.getText());
+
         if(fldUsername.getText().equals("admin") && fldPassword.getText().equals("admin")) {
+
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"),bundle);
             stage.setScene(new Scene(root));
-            stage.setTitle("Express mail");
+            stage.setTitle(bundle.getString("expressMail"));
+            stage.toFront();
+            stage.show();
+            Stage login = (Stage) cancelBtn.getScene().getWindow();
+            login.close();
+        }
+
+        else if(courier!=null) {
+
+            Stage stage = new Stage();
+            CourierMainController courierMainController = new CourierMainController(model.getPackagesForCourier(courier));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/courierMain.fxml"),bundle);
+            loader.setController(courierMainController);
+            Parent root = loader.load();
+            stage.setScene(new Scene(root));
+            stage.setTitle(bundle.getString("expressMail"));
+            stage.toFront();
+            stage.show();
+            Stage login = (Stage) cancelBtn.getScene().getWindow();
+            login.close();
+
+        }
+
+        else if(manager!=null) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/managerMain.fxml"),bundle);
+            stage.setScene(new Scene(root));
+            stage.setTitle(bundle.getString("expressMail"));
             stage.toFront();
             stage.show();
             Stage login = (Stage) cancelBtn.getScene().getWindow();
@@ -72,11 +115,47 @@ public class LoginController {
 
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Check the correctness of the access data.\nIf you have problems contact customer support");
-            alert.setHeaderText("Incorrect access data!");
+            alert.setTitle(bundle.getString("error"));
+            alert.setContentText(bundle.getString("loginContent"));
+            alert.setHeaderText(bundle.getString("incorrectData"));
             alert.showAndWait();
         }
+    }
+
+    public void englishAction(ActionEvent actionEvent) {
+
+        Locale.setDefault(new Locale("en", "US"));
+        Stage primaryStage=(Stage) fldUsername.getScene().getWindow();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"),bundle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("Express mail");
+        primaryStage.toFront();
+        primaryStage.show();
+
+    }
+
+    public void bosnianAction(ActionEvent actionEvent) {
+
+        Locale.setDefault(new Locale("bs", "BA"));
+        Stage primaryStage=(Stage) fldUsername.getScene().getWindow();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"),bundle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("Express mail");
+        primaryStage.toFront();
+        primaryStage.show();
+
     }
 
     public void cancelAction(ActionEvent actionEvent) {
