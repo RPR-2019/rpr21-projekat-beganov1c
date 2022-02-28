@@ -1,10 +1,14 @@
 package ba.unsa.etf.rpr;
 
+import ba.unsa.etf.rpr.controller.AboutController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
 
@@ -14,11 +18,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+        Locale.setDefault(new Locale("bs", "BA"));
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"),bundle);
         stage.setScene(new Scene(root));
         stage.setTitle("Login");
         stage.setResizable(false);
         stage.toFront();
         stage.show();
+        AboutController.setGetHostController(getHostServices());
+
     }
 }
