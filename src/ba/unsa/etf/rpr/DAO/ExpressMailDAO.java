@@ -1,8 +1,12 @@
-package ba.unsa.etf.rpr;
+package ba.unsa.etf.rpr.DAO;
 
+import ba.unsa.etf.rpr.enums.OrderStatus;
 import ba.unsa.etf.rpr.model.Courier;
+import ba.unsa.etf.rpr.model.Manager;
 import ba.unsa.etf.rpr.model.Package;
 import ba.unsa.etf.rpr.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.sql.*;
@@ -11,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class ExpressMailDAO {
 
@@ -35,6 +40,16 @@ public class ExpressMailDAO {
     private PreparedStatement createRegisterQuery;
     private PreparedStatement updateRegisterQuery;
     private PreparedStatement deleteFromRegisterQuery;
+    private PreparedStatement getUsernamesQuery;
+    private PreparedStatement createManagerQuery;
+    private PreparedStatement updateManagerQuery;
+    private PreparedStatement deleteManagerQuery;
+    private PreparedStatement getManagersQuery;
+    private PreparedStatement getMaxIdManagerQuery;
+    private PreparedStatement getCourierLoginQuery;
+    private PreparedStatement getManagerLoginQuery;
+    private PreparedStatement getManagersUsernamesQuery;
+    private PreparedStatement getUsersQuery;
 
     public static ExpressMailDAO getInstance() {
         if(instance==null)
@@ -96,12 +111,12 @@ public class ExpressMailDAO {
         getCourierQuery = conn.prepareStatement("SELECT * FROM courier WHERE id=?");
         getUserQuery = conn.prepareStatement("SELECT * FROM user WHERE id=?");
         deletePackageQuery = conn.prepareStatement("DELETE FROM package WHERE id=?");
-        addCourierQuery = conn.prepareStatement("INSERT INTO courier VALUES (?,?,?,?,?)");
+        addCourierQuery = conn.prepareStatement("INSERT INTO courier VALUES (?,?,?,?,?,?)");
         getMaxIdCourierQuery = conn.prepareStatement("SELECT MAX(id)+1 FROM courier");
         getCouriersQuery = conn.prepareStatement("SELECT * FROM courier");
         updatePackageQuery = conn.prepareStatement("UPDATE package SET description=?,address=?,sender=?,receiver=?,courier=?,weight=?,delivery_price=?,city=?,zip_code=?, sending_time=?, delivery_time=?, order_status=? WHERE id=?");
         updateUserQuery= conn.prepareStatement("UPDATE user SET name=?,telephone_number=?,address=?,city=?,zip_code=? WHERE id=?");
-        updateCourierQuery = conn.prepareStatement("UPDATE courier SET name=?,telephone_number=?,username=?,password=? WHERE id=?");
+        updateCourierQuery = conn.prepareStatement("UPDATE courier SET name=?,telephone_number=?,username=?,password=?, image=? WHERE id=?");
         createPackageQuery = conn.prepareStatement("INSERT INTO package VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
         getMaxIdPackageQuery = conn.prepareStatement("SELECT MAX(id)+1 FROM package");
         deleteCourierQuery = conn.prepareStatement("DELETE FROM courier WHERE id=?");
@@ -110,10 +125,20 @@ public class ExpressMailDAO {
         createRegisterQuery = conn.prepareStatement("INSERT INTO register VALUES(?,?)");
         updateRegisterQuery = conn.prepareStatement("UPDATE register SET courier=? WHERE package=?");
         deleteFromRegisterQuery = conn.prepareStatement("DELETE FROM register WHERE package=?");
+        getUsernamesQuery = conn.prepareStatement("SELECT username FROM courier");
+        getManagersQuery = conn.prepareStatement("SELECT * FROM manager");
+        createManagerQuery = conn.prepareStatement("INSERT INTO manager VALUES (?,?,?,?)");
+        updateManagerQuery = conn.prepareStatement("UPDATE manager SET name=?, username=?, password=? WHERE id=?");
+        deleteManagerQuery = conn.prepareStatement("DELETE FROM manager WHERE id=?");
+        getMaxIdManagerQuery = conn.prepareStatement("SELECT Max(id)+1 FROM courier");
+        getCourierLoginQuery = conn.prepareStatement("SELECT * FROM courier WHERE username=? AND password=?");
+        getManagerLoginQuery = conn.prepareStatement("SELECT * FROM manager WHERE username=? AND password=?");
+        getManagersUsernamesQuery = conn.prepareStatement("SELECT username FROM manager");
+        getUsersQuery = conn.prepareStatement("SELECT * FROM user");
 
     }
 
-    private void regenerateDatabase() {
+    void regenerateDatabase() {
         Scanner scanner = null;
         try {
             scanner = new Scanner(new FileInputStream("baza.sql"));
@@ -183,7 +208,7 @@ public class ExpressMailDAO {
         ResultSet rs = getCourierQuery.executeQuery();
         if(!rs.next())
             return null;
-        return new Courier(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+        return new Courier(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
 
     }
 
@@ -218,6 +243,9 @@ public class ExpressMailDAO {
             addCourierQuery.setInt(1,id);
             addCourierQuery.setString(2, courier.getName());
             addCourierQuery.setString(3, courier.getTelephoneNumber());
+            addCourierQuery.setString(4, courier.getUsername());
+            addCourierQuery.setString(5, courier.getPassword());
+            addCourierQuery.setString(6, courier.getImage());
             addCourierQuery.executeUpdate();
 
         } catch (SQLException e) {
@@ -277,7 +305,10 @@ public class ExpressMailDAO {
         try {
             updateCourierQuery.setString(1, courier.getName());
             updateCourierQuery.setString(2, courier.getTelephoneNumber());
-            updateCourierQuery.setInt(3, courier.getId());
+            updateCourierQuery.setString(3, courier.getUsername());
+            updateCourierQuery.setString(4, courier.getPassword());
+            updateCourierQuery.setString(5, courier.getImage());
+            updateCourierQuery.setInt(6, courier.getId());
             updateCourierQuery.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -293,9 +324,21 @@ public class ExpressMailDAO {
             if(rs.next())
                 id=rs.getInt(1);
             DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            if(aPackage.getSender().getZipCode()!=-1) addUser(aPackage.getSender());
+            if(aPackage.getSender().getZipCode()!=-1) {
+                if (aPackage.getSender().getId() == -1)
+                    addUser(aPackage.getSender());
+                else
+                    updateUser(aPackage.getSender());
+
+            }
             else aPackage.getSender().setId(1);
-            addUser(aPackage.getReceiver());
+
+            if(aPackage.getReceiver().getId()==-1)
+                addUser(aPackage.getReceiver());
+            else
+                updateUser(aPackage.getReceiver());
+
+
             aPackage.setId(id);
             createPackageQuery.setInt(1, aPackage.getId());
             createPackageQuery.setString(2, aPackage.getDescription());
@@ -394,4 +437,152 @@ public class ExpressMailDAO {
             }
         }
     }
+
+    public ArrayList<String> getUsernames() {
+
+        ArrayList<String> usernames = new ArrayList<>();
+        try {
+            ResultSet rs = getUsernamesQuery.executeQuery();
+            while(rs.next())
+                usernames.add(rs.getString(1));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usernames;
+    }
+
+
+    public ArrayList<Manager> managers() {
+
+
+        ArrayList<Manager> managers = new ArrayList<>();
+
+        try {
+            ResultSet rs = getManagersQuery.executeQuery();
+            while(rs.next())
+                managers.add(getManagerFromResultSet(rs));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return managers;
+    }
+
+    private Manager getManagerFromResultSet(ResultSet rs) throws SQLException {
+
+        return new Manager(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4));
+    }
+
+    public void addManager(Manager manager) {
+
+        try {
+            ResultSet rs = getMaxIdManagerQuery.executeQuery();
+            manager.setId(rs.getInt(1));
+            createManagerQuery.setInt(1, rs.getInt(1));
+            createManagerQuery.setString(2, manager.getName());
+            createManagerQuery.setString(3, manager.getUsername());
+            createManagerQuery.setString(4, manager.getPassword());
+            createManagerQuery.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateManager(Manager manager) {
+        try {
+            updateManagerQuery.setString(1,manager.getName());
+            updateManagerQuery.setString(2,manager.getUsername());
+            updateManagerQuery.setString(3,manager.getPassword());
+            updateManagerQuery.setInt(4,manager.getId());
+            updateCourierQuery.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteManager(Manager manager) {
+
+        try {
+            deleteManagerQuery.setInt(1, manager.getId());
+            deleteManagerQuery.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public TreeSet<Package> getPackagesForCourier(Courier courier) {
+
+        TreeSet<Package> packages = new TreeSet<>();
+        packages().forEach(aPackage -> {
+            if(aPackage.getCourier().getId()==courier.getId())
+                packages.add(aPackage);
+        });
+
+        return packages;
+    }
+
+    public Courier getCourier(String username, String password) {
+
+        try {
+            getCourierLoginQuery.setString(1,username);
+            getCourierLoginQuery.setString(2,password);
+            ResultSet rs = getCourierLoginQuery.executeQuery();
+            if(rs.next())
+                return getCourierFromResultSet(rs.getInt(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public Manager getManager(String username, String password) {
+        try {
+            getManagerLoginQuery.setString(1,username);
+            getManagerLoginQuery.setString(2,password);
+            ResultSet rs = getManagerLoginQuery.executeQuery();
+            if(rs.next())
+                return getManagerFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public ArrayList<String> getManagerUsernames() {
+        ArrayList<String> usernames = new ArrayList<>();
+        try {
+            ResultSet rs = getManagersUsernamesQuery.executeQuery();
+            while(rs.next())
+                usernames.add(rs.getString(1));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usernames;
+    }
+
+    public ObservableList<User> users() {
+        ObservableList<User> users = FXCollections.observableArrayList();
+
+        try {
+            ResultSet rs = getUsersQuery.executeQuery();
+            while(rs.next())
+                users.add(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
 }
