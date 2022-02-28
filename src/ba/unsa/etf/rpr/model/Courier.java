@@ -10,6 +10,7 @@ public class Courier extends Person implements Comparable<Courier> {
     private ArrayList<Package> packages;
     private String username;
     private String password;
+    private String image;
 
 
     public Courier(int id, String name, String telephoneNumber, String username, String password) {
@@ -18,6 +19,16 @@ public class Courier extends Person implements Comparable<Courier> {
         this.username=username;
         this.password=password;
         packages = new ArrayList<>();
+        image=null;
+    }
+
+    public Courier(int id, String name, String telephoneNumber, String username, String password, String image) {
+        super(name, telephoneNumber);
+        this.id = id;
+        this.username=username;
+        this.password=password;
+        packages = new ArrayList<>();
+        this.image=image;
     }
 
     public Courier(int id, String name, String telephoneNumber, ArrayList<Package> packages) {
@@ -56,6 +67,14 @@ public class Courier extends Person implements Comparable<Courier> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

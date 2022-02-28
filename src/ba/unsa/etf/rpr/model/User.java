@@ -7,8 +7,8 @@ public class User extends Person {
     private String city;
     private int zipCode;
 
-    public User(int id, String ime, String brojTelefona, String address, String city, int zipCode) {
-        super(ime, brojTelefona);
+    public User(int id, String name, String telephoneNumber, String address, String city, int zipCode) {
+        super(name, telephoneNumber);
         this.id = id;
         this.address = address;
         this.city = city;

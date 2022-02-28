@@ -5,9 +5,9 @@ public abstract class Person {
     private String name;
     private String telephoneNumber;
 
-    protected Person(String ime, String brojTelefona) {
-        this.name = ime;
-        this.telephoneNumber = brojTelefona;
+    protected Person(String name, String telephoneNumber) {
+        this.name = name;
+        this.telephoneNumber = telephoneNumber;
     }
 
     public String getName() {
