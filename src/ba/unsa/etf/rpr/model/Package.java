@@ -147,4 +147,11 @@ public class Package implements Comparable<Package> {
     public int compareTo(Package o) {
         return Integer.compare(id,o.getId());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Package aPackage)) return false;
+        return getId() == aPackage.getId();
+    }
 }

@@ -50,4 +50,11 @@ public class Manager {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Manager manager)) return false;
+        return getId() == manager.getId();
+    }
 }
