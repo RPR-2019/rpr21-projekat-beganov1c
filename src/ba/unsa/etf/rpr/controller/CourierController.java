@@ -85,8 +85,8 @@ public class CourierController {
 
         else if(!Objects.equals(username, usernameField.getText())) {
 
-            Optional<String> nadjen=usernames.stream().filter(username -> username.equals(usernameField.getText())).findFirst();
-            if(nadjen.isPresent()) {
+            Optional<String> found=usernames.stream().filter(username -> username.equals("c"+usernameField.getText())).findFirst();
+            if(found.isPresent()) {
                 usernameField.getStyleClass().removeAll("fieldCorrect");
                 usernameField.getStyleClass().add("fieldIncorrect");
                 isti.set(true);

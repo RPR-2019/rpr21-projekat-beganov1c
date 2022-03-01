@@ -57,7 +57,7 @@ INSERT INTO "courier" VALUES (1,'Courier 1','777','ccourier1','courier1',NULL);
 INSERT INTO "courier" VALUES (2,'Courier 2','888','ccourier2','courier2',NULL);
 INSERT INTO "package" VALUES (1,'Televizor','ona',2,3,1,2,10,'Cazin',77220,'14-01-2017 11:42:32',NULL,'In transport');
 INSERT INTO "package" VALUES (2,'Sportska oprema','ova',3,4,2,8,10,'Cazin',77220,'14-03-2020 13:42:00',NULL,'In warehouse');
-INSERT INTO "manager" VALUES (1,'Manager 1','manager1','manager1');
+INSERT INTO "manager" VALUES (1,'Manager 1','mmanager1','manager1');
 COMMIT;
 
 

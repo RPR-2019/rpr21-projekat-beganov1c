@@ -28,6 +28,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label text="%description" GridPane.rowIndex="1" />
@@ -82,6 +83,14 @@
       <TextField fx:id="sendingTimeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <TextField fx:id="orderStatusField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <TextField fx:id="deliveryTimeField" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="15">
+        <buttons>
+          <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelAction" text="%cancel" />
+        </buttons>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </ButtonBar>
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
