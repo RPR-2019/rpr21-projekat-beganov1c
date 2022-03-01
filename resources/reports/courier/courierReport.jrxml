@@ -25,7 +25,7 @@
 			  			AND p.sender=u1.id
 			  				AND p.receiver = u2.id
 			  					AND c.id=p.courier
-			  						AND (CAST(substr(sending_time,7,4)||substr(sending_time,4,2)||substr(sending_time,1,2) AS INT) >= $P{date} )
+			  						AND (CAST(substr(delivery_time,7,4)||substr(delivery_time,4,2)||substr(delivery_time,1,2) AS INT) >= $P{date} )
 			  				
 			  	
 			  	]]>

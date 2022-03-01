@@ -38,13 +38,13 @@ class ExpressMailDAOTest {
     void packages() {
 
         List<Package> packages = model.packages();
-        assertEquals(2,packages.size());
+        assertEquals(6,packages.size());
     }
 
     @Test
     void deletePackage() {
         model.deletePackage(3);
-        assertEquals(2,model.packages().size());
+        assertEquals(5,model.packages().size());
         assertEquals(2,model.packages().get(1).getId());
     }
 
@@ -65,7 +65,7 @@ class ExpressMailDAOTest {
         model.createPackage(aPackage);
         aPackage.setDescription("new");
         model.updatePackage(aPackage);
-        assertEquals("new",model.packages().get(2).getDescription());
+        assertEquals("new",model.packages().get(6).getDescription());
     }
 
     @Test
@@ -156,13 +156,13 @@ class ExpressMailDAOTest {
     @Test
     void getCourier() {
 
-        Courier courier=model.getCourier("ccourier1","courier1");
+        Courier courier=model.getCourier("courier1","courier1");
         assertEquals(1,courier.getId());
     }
 
     @Test
     void getManager() {
-        Manager manager=model.getManager("mmanager1","manager1");
+        Manager manager=model.getManager("manager1","manager1");
         assertEquals(1,manager.getId());
     }
 

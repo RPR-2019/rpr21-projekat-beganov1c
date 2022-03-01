@@ -457,6 +457,8 @@ public class ExpressMailDAO {
             while(rs.next())
                 usernames.add(rs.getString(1));
 
+            usernames.addAll(getManagerUsernames());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -488,8 +490,10 @@ public class ExpressMailDAO {
 
         try {
             ResultSet rs = getMaxIdManagerQuery.executeQuery();
-            manager.setId(rs.getInt(1));
-            createManagerQuery.setInt(1, rs.getInt(1));
+            if(rs.next())
+                manager.setId(rs.getInt(1));
+            System.out.println(rs.getInt(1));
+            createManagerQuery.setInt(1, manager.getId());
             createManagerQuery.setString(2, manager.getName());
             createManagerQuery.setString(3, manager.getUsername());
             createManagerQuery.setString(4, manager.getPassword());
@@ -575,6 +579,8 @@ public class ExpressMailDAO {
             ResultSet rs = getManagersUsernamesQuery.executeQuery();
             while(rs.next())
                 usernames.add(rs.getString(1));
+
+            usernames.add("admin");
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -82,6 +82,8 @@ public class LoginController {
             stage.setTitle(bundle.getString("expressMail"));
             stage.toFront();
             stage.show();
+            stage.setMinHeight(550);
+            stage.setMinWidth(500);
             Stage login = (Stage) cancelBtn.getScene().getWindow();
             login.close();
         }
@@ -97,6 +99,8 @@ public class LoginController {
             stage.setTitle(bundle.getString("expressMail"));
             stage.toFront();
             stage.show();
+            stage.setMinHeight(500);
+            stage.setMinWidth(500);
             Stage login = (Stage) cancelBtn.getScene().getWindow();
             login.close();
 
@@ -109,6 +113,8 @@ public class LoginController {
             stage.setTitle(bundle.getString("expressMail"));
             stage.toFront();
             stage.show();
+            stage.setMinHeight(550);
+            stage.setMinWidth(500);
             Stage login = (Stage) cancelBtn.getScene().getWindow();
             login.close();
         }

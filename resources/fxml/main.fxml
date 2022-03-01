@@ -6,7 +6,7 @@
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.MainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.MainController">
     <stylesheets>
         <URL value="@/css/appearance.css" />
     </stylesheets>
@@ -28,9 +28,9 @@
         </TableView>
     </center>
     <right>
-        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
+        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="120.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" onAction="#makePackageAction" prefHeight="25.0" prefWidth="204.0" text="%createPackage" />
+                <Button fx:id="createPackageBtn" mnemonicParsing="false" onAction="#makePackageAction" prefHeight="25.0" prefWidth="204.0" text="%createPackage" />
                 <Button mnemonicParsing="false" onAction="#deletePackageAction" prefHeight="25.0" prefWidth="153.0" text="%deletePackage" />
                 <Button mnemonicParsing="false" onAction="#updatePackageAction" prefHeight="25.0" prefWidth="212.0" text="%updatePackage" />
             <Separator prefWidth="200.0">

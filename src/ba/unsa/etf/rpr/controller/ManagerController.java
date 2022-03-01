@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -21,6 +22,7 @@ public class ManagerController {
     public Button cancelBtn;
     private Manager manager;
     private ArrayList<String> usernames;
+    private String username="";
 
     public ManagerController(Manager manager, ArrayList<String> usernames) {
         this.manager = manager;
@@ -33,6 +35,7 @@ public class ManagerController {
             nameField.setText(manager.getName());
             usernameField.setText(manager.getUsername());
             passwordField.setText(manager.getPassword());
+            username=manager.getUsername();
         }
     }
 
@@ -40,7 +43,7 @@ public class ManagerController {
     public void okAction(ActionEvent actionEvent) {
 
 
-        AtomicBoolean isti = new AtomicBoolean(false);
+        AtomicBoolean same = new AtomicBoolean(false);
         if(nameField.getText().trim().isEmpty()) {
             nameField.getStyleClass().removeAll("fieldCorrect");
             nameField.getStyleClass().add("fieldIncorrect");
@@ -57,21 +60,25 @@ public class ManagerController {
             usernameField.getStyleClass().add("fieldIncorrect");
         }
 
-        else {
+        else if(!Objects.equals(username, usernameField.getText())) {
 
-            Optional<String> found=usernames.stream().filter(username -> username.equals("m"+usernameField.getText())).findFirst();
+            Optional<String> found=usernames.stream().filter(username -> username.equals(usernameField.getText())).findFirst();
             if(found.isPresent()) {
+                same.set(true);
                 usernameField.getStyleClass().removeAll("fieldCorrect");
                 usernameField.getStyleClass().add("fieldIncorrect");
-                System.out.println("isti");
             }
             else {
                 usernameField.getStyleClass().removeAll("fieldIncorrect");
                 usernameField.getStyleClass().add("fieldCorrect");
-                isti.set(true);
             }
 
 
+        }
+
+        else if(Objects.equals(username, usernameField.getText())) {
+            usernameField.getStyleClass().removeAll("fieldIncorrect");
+            usernameField.getStyleClass().add("fieldCorrect");
         }
 
         if(passwordField.getText().trim().isEmpty()) {
@@ -84,12 +91,12 @@ public class ManagerController {
             passwordField.getStyleClass().add("fieldCorrect");
         }
 
-        if(!nameField.getText().trim().isEmpty() && !usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty() && isti.get() ) {
+        if(!nameField.getText().trim().isEmpty() && !usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty() && !same.get() ) {
 
-            if(manager ==null) manager = new Manager(-1, nameField.getText(), "m"+usernameField.getText(), passwordField.getText());
+            if(manager ==null) manager = new Manager(-1, nameField.getText(), usernameField.getText(), passwordField.getText());
             else {
                 manager.setName(nameField.getText());
-                manager.setUsername("m"+usernameField.getText());
+                manager.setUsername(usernameField.getText());
                 manager.setPassword(passwordField.getText());
             }
             Stage stage = (Stage) okBtn.getScene().getWindow();

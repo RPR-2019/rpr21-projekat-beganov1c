@@ -80,36 +80,8 @@ public class ManagerMainController {
             }
         });
 
-        autoResizeColumns(tableViewPackage);
-
     }
 
-    public static void autoResizeColumns( TableView<?> table ) {
-
-        table.setColumnResizePolicy( TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getColumns().forEach( column ->
-        {
-            Text t = new Text(column.getText());
-            double max = t.getLayoutBounds().getWidth();
-            for ( int i = 0; i < table.getItems().size(); i++ )
-            {
-                //cell must not be empty
-                if ( column.getCellData( i ) != null )
-                {
-                    t = new Text( column.getCellData( i ).toString() );
-                    double calculateWidth = t.getLayoutBounds().getWidth();
-                    //remember new max-width
-                    if ( calculateWidth > max )
-                    {
-                        max = calculateWidth;
-                    }
-                }
-            }
-            column.setPrefWidth( max + 10.0d );
-        } );
-        table.setMaxWidth(Region.USE_COMPUTED_SIZE);
-
-    }
 
 
     public void aboutAction(ActionEvent actionEvent) throws IOException {
@@ -164,7 +136,6 @@ public class ManagerMainController {
                 packages.addAll(model.packages());
                 tableViewPackage.setItems(packages);
                 tableViewPackage.refresh();
-                autoResizeColumns(tableViewPackage);
             }
         });
     }
@@ -181,7 +152,6 @@ public class ManagerMainController {
             model.deletePackage(tableViewPackage.getSelectionModel().getSelectedItem().getId());
             tableViewPackage.getItems().remove(tableViewPackage.getSelectionModel().getSelectedItem());
             tableViewPackage.refresh();
-            autoResizeColumns(tableViewPackage);
         }
 
     }
@@ -207,7 +177,6 @@ public class ManagerMainController {
                     if (aPackage != null) {
                         model.updatePackage(aPackage);
                         tableViewPackage.refresh();
-                        autoResizeColumns(tableViewPackage);
                         if (aPackage.getOrderStatus() == OrderStatus.ERROR) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle(bundle.getString("deliveringError"));
@@ -328,7 +297,6 @@ public class ManagerMainController {
                         packages.addAll(model.packages());
                         tableViewPackage.setItems(packages);
                         tableViewPackage.refresh();
-                        autoResizeColumns(tableViewPackage);
                     }
                 });
 
@@ -372,7 +340,7 @@ public class ManagerMainController {
                 packages.addAll(model.packages());
                 tableViewPackage.setItems(packages);
                 tableViewPackage.refresh();
-                autoResizeColumns(tableViewPackage);
+
             }
         }
         catch (Exception e) {

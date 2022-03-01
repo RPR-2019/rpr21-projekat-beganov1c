@@ -83,36 +83,8 @@ public class MainController {
             }
         });
 
-        autoResizeColumns(tableViewPackage);
-
     }
 
-    public static void autoResizeColumns( TableView<?> table ) {
-
-        table.setColumnResizePolicy( TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getColumns().forEach( column ->
-        {
-            Text t = new Text(column.getText());
-            double max = t.getLayoutBounds().getWidth();
-            for ( int i = 0; i < table.getItems().size(); i++ )
-            {
-                //cell must not be empty
-                if ( column.getCellData( i ) != null )
-                {
-                    t = new Text( column.getCellData( i ).toString() );
-                    double calculateWidth = t.getLayoutBounds().getWidth();
-                    //remember new max-width
-                    if ( calculateWidth > max )
-                    {
-                        max = calculateWidth;
-                    }
-                }
-            }
-            column.setPrefWidth( max + 10.0d );
-        } );
-            table.setMaxWidth(Region.USE_COMPUTED_SIZE);
-
-    }
 
 
     public void aboutAction(ActionEvent actionEvent) throws IOException {
@@ -166,7 +138,6 @@ public class MainController {
                 packages.addAll(model.packages());
                 tableViewPackage.setItems(packages);
                 tableViewPackage.refresh();
-                autoResizeColumns(tableViewPackage);
             }
         });
     }
@@ -183,7 +154,6 @@ public class MainController {
             model.deletePackage(tableViewPackage.getSelectionModel().getSelectedItem().getId());
             tableViewPackage.getItems().remove(tableViewPackage.getSelectionModel().getSelectedItem());
             tableViewPackage.refresh();
-            autoResizeColumns(tableViewPackage);
         }
 
     }
@@ -209,7 +179,6 @@ public class MainController {
                     if (aPackage != null) {
                         model.updatePackage(aPackage);
                         tableViewPackage.refresh();
-                        autoResizeColumns(tableViewPackage);
                         if (aPackage.getOrderStatus() == OrderStatus.ERROR) {
 
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -331,7 +300,6 @@ public class MainController {
                         packages.addAll(model.packages());
                         tableViewPackage.setItems(packages);
                         tableViewPackage.refresh();
-                        autoResizeColumns(tableViewPackage);
                     }
                 });
 
@@ -375,7 +343,6 @@ public class MainController {
                 packages.addAll(model.packages());
                 tableViewPackage.setItems(packages);
                 tableViewPackage.refresh();
-                autoResizeColumns(tableViewPackage);
             }
         }
         catch (Exception e) {
@@ -389,7 +356,7 @@ public class MainController {
 
         Stage stage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        ManagerController managerController = new ManagerController(null, model.getManagerUsernames());
+        ManagerController managerController = new ManagerController(null, model.getUsernames());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/manager.fxml"),bundle);
         loader.setController(managerController);
         Parent root = loader.load();
@@ -419,7 +386,7 @@ public class MainController {
             Optional<Manager> result = dialog.showAndWait();
             if (result.isPresent()){
                 Stage stage = new Stage();
-                ManagerController managerController = new ManagerController(result.get(), model.getManagerUsernames());
+                ManagerController managerController = new ManagerController(result.get(), model.getUsernames());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/manager.fxml"),bundle);
                 loader.setController(managerController);
                 Parent root = loader.load();

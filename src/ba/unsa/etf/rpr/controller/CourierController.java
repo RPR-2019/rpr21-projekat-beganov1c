@@ -45,7 +45,7 @@ public class CourierController {
         if(courier !=null) {
             nameField.setText(courier.getName());
             telephoneNumberField.setText(courier.getTelephoneNumber());
-            usernameField.setText(courier.getUsername().substring(1));
+            usernameField.setText(courier.getUsername());
             passwordField.setText(courier.getPassword());
             username=courier.getUsername();
             if(courier.getImage()!=null)
@@ -57,7 +57,7 @@ public class CourierController {
     public void okAction(ActionEvent actionEvent) {
 
 
-        AtomicBoolean isti = new AtomicBoolean(false);
+        AtomicBoolean same = new AtomicBoolean(false);
         if(nameField.getText().trim().isEmpty()) {
             nameField.getStyleClass().removeAll("fieldCorrect");
             nameField.getStyleClass().add("fieldIncorrect");
@@ -85,11 +85,11 @@ public class CourierController {
 
         else if(!Objects.equals(username, usernameField.getText())) {
 
-            Optional<String> found=usernames.stream().filter(username -> username.equals("c"+usernameField.getText())).findFirst();
+            Optional<String> found=usernames.stream().filter(username -> username.equals(usernameField.getText())).findFirst();
             if(found.isPresent()) {
                 usernameField.getStyleClass().removeAll("fieldCorrect");
                 usernameField.getStyleClass().add("fieldIncorrect");
-                isti.set(true);
+                same.set(true);
             }
             else {
                 usernameField.getStyleClass().removeAll("fieldIncorrect");
@@ -97,6 +97,11 @@ public class CourierController {
             }
 
 
+        }
+
+        else if(Objects.equals(username, usernameField.getText())) {
+            usernameField.getStyleClass().removeAll("fieldIncorrect");
+            usernameField.getStyleClass().add("fieldCorrect");
         }
 
         if(passwordField.getText().trim().isEmpty()) {
@@ -109,18 +114,18 @@ public class CourierController {
             passwordField.getStyleClass().add("fieldCorrect");
         }
 
-        if(!nameField.getText().trim().isEmpty() && !telephoneNumberField.getText().trim().isEmpty() && !usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty() && !isti.get() ) {
+        if(!nameField.getText().trim().isEmpty() && !telephoneNumberField.getText().trim().isEmpty() && !usernameField.getText().trim().isEmpty() && !passwordField.getText().trim().isEmpty() && !same.get() ) {
 
             if(courier ==null) {
                 if (set == 1)
-                    courier = new Courier(-1, nameField.getText(), telephoneNumberField.getText(), "c" + usernameField.getText(), passwordField.getText(), imageView.getImage().getUrl());
+                    courier = new Courier(-1, nameField.getText(), telephoneNumberField.getText(), usernameField.getText(), passwordField.getText(), imageView.getImage().getUrl());
                 else
-                    courier = new Courier(-1, nameField.getText(), telephoneNumberField.getText(), "c" + usernameField.getText(), passwordField.getText(), null);
+                    courier = new Courier(-1, nameField.getText(), telephoneNumberField.getText(), usernameField.getText(), passwordField.getText(), null);
             }
             else {
                 courier.setName(nameField.getText());
                 courier.setTelephoneNumber(telephoneNumberField.getText());
-                courier.setUsername("c"+usernameField.getText());
+                courier.setUsername(usernameField.getText());
                 courier.setPassword(passwordField.getText());
                 if(set==1) courier.setImage(imageView.getImage().getUrl());
             }
