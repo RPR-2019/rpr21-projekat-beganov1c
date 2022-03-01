@@ -62,6 +62,7 @@ INSERT INTO "package" VALUES (4,'Keyboard','ova',3,4,2,8,10,'Sarajevo',71000,'13
 INSERT INTO "package" VALUES (5,'Headphones','ona',2,3,1,2,10,'Sarajevo',71000,'01-03-2022 10:42:32','01-03-2022 13:42:32','Delivered');
 INSERT INTO "package" VALUES (6,'Shoes','ova',3,4,2,8,10,'Sarajevo',71000,'01-03-2022 12:42:00','01-03-2022 16:42:00','Delivered');
 INSERT INTO "manager" VALUES (1,'Manager 1','manager1','manager1');
+INSERT INTO "manager" VALUES (2,'Manager 2','manager2','manager2');
 COMMIT;
 
 

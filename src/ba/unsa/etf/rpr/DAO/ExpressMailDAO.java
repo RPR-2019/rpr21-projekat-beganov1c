@@ -130,7 +130,7 @@ public class ExpressMailDAO {
         createManagerQuery = conn.prepareStatement("INSERT INTO manager VALUES (?,?,?,?)");
         updateManagerQuery = conn.prepareStatement("UPDATE manager SET name=?, username=?, password=? WHERE id=?");
         deleteManagerQuery = conn.prepareStatement("DELETE FROM manager WHERE id=?");
-        getMaxIdManagerQuery = conn.prepareStatement("SELECT Max(id)+1 FROM courier");
+        getMaxIdManagerQuery = conn.prepareStatement("SELECT Max(id)+1 FROM manager");
         getCourierLoginQuery = conn.prepareStatement("SELECT * FROM courier WHERE username=? AND password=?");
         getManagerLoginQuery = conn.prepareStatement("SELECT * FROM manager WHERE username=? AND password=?");
         getManagersUsernamesQuery = conn.prepareStatement("SELECT username FROM manager");
@@ -492,7 +492,6 @@ public class ExpressMailDAO {
             ResultSet rs = getMaxIdManagerQuery.executeQuery();
             if(rs.next())
                 manager.setId(rs.getInt(1));
-            System.out.println(rs.getInt(1));
             createManagerQuery.setInt(1, manager.getId());
             createManagerQuery.setString(2, manager.getName());
             createManagerQuery.setString(3, manager.getUsername());
