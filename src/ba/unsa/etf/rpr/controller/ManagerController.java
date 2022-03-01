@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr.controller;
 
-import ba.unsa.etf.rpr.model.Courier;
 import ba.unsa.etf.rpr.model.Manager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,18 +1,14 @@
 package ba.unsa.etf.rpr;
 
 import ba.unsa.etf.rpr.controller.AboutController;
-import ba.unsa.etf.rpr.controller.ManagerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class Main extends Application {
 

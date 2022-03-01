@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 public class Courier extends Person implements Comparable<Courier> {

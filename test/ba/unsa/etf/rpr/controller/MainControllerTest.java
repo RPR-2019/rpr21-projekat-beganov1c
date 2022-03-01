@@ -11,11 +11,10 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 @ExtendWith(ApplicationExtension.class)
 class MainControllerTest {
     Stage theStage;
