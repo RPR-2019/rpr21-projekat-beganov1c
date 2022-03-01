@@ -71,7 +71,7 @@ public class ExpressMailDAO {
 
     private ExpressMailDAO() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:baza.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:database.db");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -141,7 +141,7 @@ public class ExpressMailDAO {
     void regenerateDatabase() {
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new FileInputStream("baza.sql"));
+            scanner = new Scanner(new FileInputStream("database.sql"));
             String sqlQuery = "";
             while (scanner.hasNext()) {
                 sqlQuery += scanner.nextLine();
@@ -159,6 +159,17 @@ public class ExpressMailDAO {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void returnDatabaseToDefault() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM package");
+        stmt.executeUpdate("DELETE FROM courier");
+        stmt.executeUpdate("DELETE FROM user");
+        stmt.executeUpdate("DELETE FROM manager");
+        stmt.executeUpdate("DELETE FROM register");
+        regenerateDatabase();
     }
 
     public List<Package> packages() {
@@ -495,7 +506,7 @@ public class ExpressMailDAO {
             updateManagerQuery.setString(2,manager.getUsername());
             updateManagerQuery.setString(3,manager.getPassword());
             updateManagerQuery.setInt(4,manager.getId());
-            updateCourierQuery.executeUpdate();
+            updateManagerQuery.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -577,7 +588,8 @@ public class ExpressMailDAO {
         try {
             ResultSet rs = getUsersQuery.executeQuery();
             while(rs.next())
-                users.add(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6)));
+               if(rs.getInt(1)!=1)
+                   users.add(new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
