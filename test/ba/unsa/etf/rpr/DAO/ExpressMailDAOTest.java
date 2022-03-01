@@ -1,10 +1,11 @@
 package ba.unsa.etf.rpr.DAO;
 
 import ba.unsa.etf.rpr.enums.OrderStatus;
-import ba.unsa.etf.rpr.model.Courier;
 import ba.unsa.etf.rpr.model.Manager;
 import ba.unsa.etf.rpr.model.Package;
 import ba.unsa.etf.rpr.model.User;
+import ba.unsa.etf.rpr.model.Courier;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +44,7 @@ class ExpressMailDAOTest {
     void deletePackage() {
         model.deletePackage(3);
         assertEquals(5,model.packages().size());
-        assertEquals(2,model.packages().get(1).getId());
+        Assertions.assertEquals(2,model.packages().get(1).getId());
     }
 
     @Test
@@ -63,7 +64,7 @@ class ExpressMailDAOTest {
         model.createPackage(aPackage);
         aPackage.setDescription("new");
         model.updatePackage(aPackage);
-        assertEquals("new",model.packages().get(6).getDescription());
+        Assertions.assertEquals("new",model.packages().get(6).getDescription());
     }
 
     @Test
@@ -108,7 +109,7 @@ class ExpressMailDAOTest {
 
     @Test
     void managers() {
-        assertEquals(1,model.managers().size());
+        assertEquals(2,model.managers().size());
     }
 
     @Test
@@ -126,7 +127,7 @@ class ExpressMailDAOTest {
         assertTrue(model.managers().contains(manager));
         manager.setPassword("password");
         model.updateManager(manager);
-        assertEquals("password",model.managers().get(1).getPassword());
+        Assertions.assertEquals("password",model.managers().get(2).getPassword());
     }
 
     @Test
