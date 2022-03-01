@@ -33,7 +33,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="%ok" />
+          <Button fx:id="okBtn" defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="%ok" />
             <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="%cancel" />
         </buttons>
       </ButtonBar>

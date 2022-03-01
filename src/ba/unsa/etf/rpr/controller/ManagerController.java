@@ -59,15 +59,16 @@ public class ManagerController {
 
         else {
 
-            Optional<String> nadjen=usernames.stream().filter(username -> username.equals(usernameField.getText())).findFirst();
-            if(nadjen.isPresent()) {
+            Optional<String> found=usernames.stream().filter(username -> username.equals("m"+usernameField.getText())).findFirst();
+            if(found.isPresent()) {
                 usernameField.getStyleClass().removeAll("fieldCorrect");
                 usernameField.getStyleClass().add("fieldIncorrect");
+                System.out.println("isti");
             }
             else {
                 usernameField.getStyleClass().removeAll("fieldIncorrect");
                 usernameField.getStyleClass().add("fieldCorrect");
-                isti.set(false);
+                isti.set(true);
             }
 
 
